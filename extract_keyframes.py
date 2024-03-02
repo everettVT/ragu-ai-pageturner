@@ -6,6 +6,18 @@ import sys
 
 import Katna.helper_functions as helper
 
+from llama_index.core import (
+    SimpleDirectoryReader,
+    VectorStoreIndex,
+    StorageContext,
+    load_index_from_storage,
+)
+from llama_index.core.tools import QueryEngineTool, ToolMetadata, FunctionTool
+from llama_index.core.agent import ReActAgent
+from llama_index.llms.openai import OpenAI
+from llama_index.multi_modal_llms.openai import OpenAIMultiModal
+
+from pymilvus import connections
 
 # td = TextDetector()
 # td.download()
@@ -21,6 +33,23 @@ def extract(video_file_path: str, num_frames: int, output_path: str):
         writer=diskwriter
     )
 
+def ingest(text: str):
+    pass
+
+def ocr():
+    image_documents = SimpleDirectoryReader("./data/images").load_data()
+
+    OPENAI_API_TOKEN="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"
+    openai_mm_llm = OpenAIMultiModal(
+        model="gpt-4-vision-preview", api_key=OPENAI_API_TOKEN, max_new_tokens=1500
+    )
+
+    response_1 = openai_mm_llm.complete(
+        prompt="Perform OCR on the pages shown. Only provide text from the images in the response. Give the response as json, with the text under a key called output",
+        # prompt="Perform OCR on the pages extract text using and return the text in a json format with the page number as the key.",
+        image_documents=image_documents,
+    )
+    return response_1
 
 def main():
     video_file_path = os.path.join(sys.argv[1])
