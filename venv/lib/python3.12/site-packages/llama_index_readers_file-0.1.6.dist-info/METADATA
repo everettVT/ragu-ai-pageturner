@@ -1,0 +1,25 @@
+Metadata-Version: 2.1
+Name: llama-index-readers-file
+Version: 0.1.6
+Summary: llama-index readers file integration
+License: MIT
+Keywords: 10k,10q,chart,eml,figure,html,hwp,image,invoice,ipynb,jupyter,notebook,pdf,pymupdf,receipt,sec,spreadsheet,tabular,unstructured.io,yaml,yml
+Author: Your Name
+Author-email: you@example.com
+Maintainer: FarisHijazi
+Requires-Python: >=3.8.1,<4.0
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Programming Language :: Python :: 3.12
+Requires-Dist: beautifulsoup4 (>=4.12.3,<5.0.0)
+Requires-Dist: bs4 (>=0.0.2,<0.0.3)
+Requires-Dist: llama-index-core (>=0.10.1,<0.11.0)
+Requires-Dist: pymupdf (>=1.23.21,<2.0.0)
+Requires-Dist: pypdf (>=4.0.1,<5.0.0)
+Description-Content-Type: text/markdown
+
+# LlamaIndex Readers Integration: File
+
