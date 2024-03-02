@@ -2,7 +2,9 @@ from Katna.image_filters.text_detector import TextDetector
 from Katna.video import Video
 from Katna.writer import KeyFrameDiskWriter
 import os
+import re
 import sys
+import typing
 
 import Katna.helper_functions as helper
 
@@ -36,28 +38,37 @@ def extract(video_file_path: str, num_frames: int, output_path: str):
 def ingest(text: str):
     pass
 
-def ocr():
-    image_documents = SimpleDirectoryReader("./data/images").load_data()
 
-    OPENAI_API_TOKEN="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"
-    openai_mm_llm = OpenAIMultiModal(
-        model="gpt-4-vision-preview", api_key=OPENAI_API_TOKEN, max_new_tokens=1500
-    )
+def ocr(img_paths: typing.List[str]):
+    image_documents = SimpleDirectoryReader(img_paths).load_data()
+    responses = []
 
-    response_1 = openai_mm_llm.complete(
-        prompt="Perform OCR on the pages shown. Only provide text from the images in the response. Give the response as json, with the text under a key called output",
-        # prompt="Perform OCR on the pages extract text using and return the text in a json format with the page number as the key.",
-        image_documents=image_documents,
-    )
-    return response_1
+    for image_doc in image_documents:
+        OPENAI_API_TOKEN="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"
+        openai_mm_llm = OpenAIMultiModal(
+            model="gpt-4-vision-preview", api_key=OPENAI_API_TOKEN, max_new_tokens=1500
+        )
+
+        response_1 = openai_mm_llm.complete(
+            prompt="Perform OCR on the pages shown. Only provide text from the images in the response. Give the response as json, with the text under a key called output",
+            image_documents=[image_doc],
+        )
+        json_txt = response_1.text.replace('```', '').replace("\'", '')
+        print(re.findall(r'output"\s+:\s+(.+)', json_txt))
+        responses.append(json_txt)
+    return responses
+
 
 def main():
     video_file_path = os.path.join(sys.argv[1])
 
     # assume like 0.75 flips per second
     vid_info = helper.get_video_info(video_file_path)
-    num_frames = int(vid_info[1] * 0.75)
-    extract(video_file_path, num_frames, "output_dir")
+    num_frames = 2  #int(vid_info[1] * 0.75)
+    output_dir = "output_dir2"
+    #extract(video_file_path, num_frames, output_dir)
+    ocr_op = ocr(output_dir)
+    print(ocr_op)
 
 
 if __name__ == "__main__":
