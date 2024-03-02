@@ -50,10 +50,10 @@ def query_db(collection_name: str, query: str, embeddings):
 
 def main():
     import sys
-    # collection_name = sys.argv[1]
+    collection_name = sys.argv[1]
     embeddings = OpenAIEmbeddings(openai_api_key=openai_key)
-    collection_name = f"demo_collection"
-    query = sys.argv[1]
+    # collection_name = f"demo_collection"
+    query = sys.argv[2]
     print(query_db(collection_name, query, embeddings))
 
 

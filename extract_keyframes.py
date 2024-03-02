@@ -80,7 +80,7 @@ def main():
     vid_info = helper.get_video_info(video_file_path)
     num_frames = int(vid_info[1] * 0.70)
     output_dir = sys.argv[2]
-    # extract(video_file_path, num_frames, output_dir)
+    extract(video_file_path, num_frames, output_dir)
     ocr_op = ocr(output_dir)
     print(ocr_op)
 
