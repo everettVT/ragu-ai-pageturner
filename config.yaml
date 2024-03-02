@@ -1,0 +1,5 @@
+milvus:
+  host: localhost
+  port: 19530
+openai:
+  key: "<YOUR KEY>"
